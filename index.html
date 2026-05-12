@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Suraj Shrestha — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0b09;
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --cream: #f0e8d8;
+    --muted: #7a7060;
+    --card: #181610;
+    --border: #2a2620;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--cream);
+    font-family: 'DM Mono', monospace;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(12,11,9,0.95), transparent);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; font-style: italic; color: var(--gold); }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--cream); }
+
+  /* HERO */
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
+  .hero-left { display: flex; flex-direction: column; justify-content: center; padding: 80px 60px 80px 80px; position: relative; z-index: 2; }
+  .hero-right { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .hero-right::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 40%, rgba(201,168,76,0.12) 0%, transparent 65%),
+                radial-gradient(ellipse at 20% 80%, rgba(139,44,44,0.1) 0%, transparent 55%);
+  }
+  .hero-ornament {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(160px, 22vw, 280px);
+    color: rgba(201,168,76,0.06);
+    line-height: 0.85;
+    user-select: none;
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    white-space: nowrap;
+  }
+  .label { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 32px; display: flex; align-items: center; gap: 16px; }
+  .label::before { content: ''; display: block; width: 40px; height: 1px; background: var(--gold); }
+  h1 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(48px, 6vw, 88px); line-height: 1.0; letter-spacing: -0.02em; color: var(--cream); margin-bottom: 8px; }
+  h1 em { font-style: italic; color: var(--gold2); }
+  .hero-role { font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-top: 20px; margin-bottom: 40px; }
+  .hero-summary { font-size: 13px; line-height: 1.9; color: rgba(240,232,216,0.6); max-width: 480px; margin-bottom: 48px; }
+  .hero-contacts { display: flex; flex-direction: column; gap: 10px; }
+  .contact-item { display: flex; align-items: center; gap: 14px; font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+  .contact-item a { color: var(--cream); text-decoration: none; transition: color 0.3s; }
+  .contact-item a:hover { color: var(--gold2); }
+  .contact-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--gold); flex-shrink: 0; }
+
+  /* LAYOUT */
+  .full-border { border-top: 1px solid var(--border); }
+  section { padding: 120px 80px; max-width: 1400px; margin: 0 auto; }
+  .section-header { display: flex; align-items: baseline; gap: 32px; margin-bottom: 80px; }
+  .section-num { font-size: 11px; letter-spacing: 0.3em; color: var(--gold); font-style: italic; font-family: 'Cormorant Garamond', serif; }
+  h2 { font-family: 'Cormorant Garamond', serif; font-weight: 300; font-size: clamp(36px, 4vw, 56px); color: var(--cream); letter-spacing: -0.02em; }
+  .divider { flex: 1; height: 1px; background: var(--border); margin-left: 32px; }
+
+  /* EXPERIENCE */
+  .experience-grid { display: grid; gap: 2px; }
+  .exp-card { background: var(--card); border: 1px solid var(--border); padding: 48px 52px; position: relative; transition: border-color 0.4s, transform 0.4s; overflow: hidden; }
+  .exp-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--gold); transform: scaleY(0); transform-origin: top; transition: transform 0.4s cubic-bezier(0.4,0,0.2,1); }
+  .exp-card:hover { border-color: rgba(201,168,76,0.3); transform: translateX(6px); }
+  .exp-card:hover::before { transform: scaleY(1); }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 12px; }
+  .exp-title { font-family: 'Cormorant Garamond', serif; font-size: 26px; font-weight: 400; color: var(--cream); }
+  .exp-period { font-size: 10px; letter-spacing: 0.25em; color: var(--gold); background: rgba(201,168,76,0.08); padding: 6px 14px; border: 1px solid rgba(201,168,76,0.2); flex-shrink: 0; }
+  .exp-venue { font-size: 11px; letter-spacing: 0.2em; color: var(--muted); text-transform: uppercase; margin-bottom: 24px; }
+  .exp-context { font-size: 12px; line-height: 1.8; color: rgba(240,232,216,0.4); margin-bottom: 24px; font-style: italic; }
+  .exp-bullets { list-style: none; display: grid; gap: 10px; }
+  .exp-bullets li { font-size: 12px; line-height: 1.7; color: rgba(240,232,216,0.65); display: flex; gap: 16px; }
+  .exp-bullets li::before { content: '—'; color: var(--gold); flex-shrink: 0; }
+
+  /* SKILLS */
+  .skills-container { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .skill-group { background: var(--card); border: 1px solid var(--border); padding: 40px 44px; transition: border-color 0.3s; }
+  .skill-group:hover { border-color: rgba(201,168,76,0.25); }
+  .skill-group-title { font-size: 10px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 24px; display: flex; align-items: center; gap: 12px; }
+  .skill-group-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag { font-size: 10px; letter-spacing: 0.15em; padding: 7px 14px; border: 1px solid var(--border); color: var(--muted); transition: all 0.3s; }
+  .tag:hover { border-color: var(--gold); color: var(--cream); background: rgba(201,168,76,0.05); }
+  .lang-row { display: flex; gap: 2px; margin-top: 2px; }
+  .lang-card { background: var(--card); border: 1px solid var(--border); padding: 32px 40px; flex: 1; text-align: center; transition: border-color 0.3s, background 0.3s; }
+  .lang-card:hover { border-color: rgba(201,168,76,0.3); background: rgba(201,168,76,0.04); }
+  .lang-name { font-family: 'Cormorant Garamond', serif; font-size: 22px; color: var(--cream); margin-bottom: 6px; }
+  .lang-level { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .project-card { background: var(--card); border: 1px solid var(--border); padding: 48px; position: relative; overflow: hidden; transition: border-color 0.4s; }
+  .project-card:hover { border-color: rgba(201,168,76,0.3); }
+  .project-card::after { content: attr(data-num); position: absolute; bottom: 24px; right: 32px; font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 80px; color: rgba(201,168,76,0.05); line-height: 1; pointer-events: none; }
+  .project-label { font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .project-title { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--cream); margin-bottom: 20px; line-height: 1.2; }
+  .project-desc { font-size: 12px; line-height: 1.8; color: rgba(240,232,216,0.55); margin-bottom: 28px; }
+  .project-tools { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tool-chip { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; padding: 5px 12px; background: rgba(201,168,76,0.07); border: 1px solid rgba(201,168,76,0.15); color: var(--gold2); }
+
+  /* EDUCATION */
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .edu-card { background: var(--card); border: 1px solid var(--border); padding: 40px 44px; transition: border-color 0.3s; }
+  .edu-card:hover { border-color: rgba(201,168,76,0.25); }
+  .edu-degree { font-family: 'Cormorant Garamond', serif; font-size: 24px; font-weight: 400; color: var(--cream); margin-bottom: 12px; }
+  .edu-institution { font-size: 11px; letter-spacing: 0.15em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+  .edu-year { font-size: 10px; letter-spacing: 0.25em; color: var(--gold); }
+
+  /* CONNECT */
+  .connect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+  .connect-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 64px 52px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.4s, transform 0.4s;
+  }
+  .connect-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .connect-card.linkedin::after { background: radial-gradient(ellipse at 20% 50%, rgba(10,102,194,0.1) 0%, transparent 70%); }
+  .connect-card.github::after { background: radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.08) 0%, transparent 70%); }
+  .connect-card:hover { border-color: rgba(201,168,76,0.45); transform: translateY(-5px); }
+  .connect-card:hover::after { opacity: 1; }
+
+  .connect-icon {
+    width: 56px; height: 56px;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.3s, background 0.3s;
+    flex-shrink: 0;
+  }
+  .connect-card:hover .connect-icon { border-color: var(--gold); background: rgba(201,168,76,0.06); }
+  .connect-icon svg { width: 24px; height: 24px; fill: var(--muted); transition: fill 0.3s; }
+  .connect-card:hover .connect-icon svg { fill: var(--gold2); }
+
+  .connect-platform { font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--gold); }
+  .connect-title { font-family: 'Cormorant Garamond', serif; font-size: 40px; font-weight: 300; color: var(--cream); line-height: 1.05; letter-spacing: -0.01em; }
+  .connect-desc { font-size: 12px; line-height: 1.85; color: rgba(240,232,216,0.5); }
+  .connect-arrow { margin-top: 8px; display: flex; align-items: center; gap: 12px; font-size: 10px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--muted); transition: color 0.3s, gap 0.3s; }
+  .connect-arrow::after { content: '→'; font-size: 18px; }
+  .connect-card:hover .connect-arrow { color: var(--gold2); gap: 22px; }
+
+  /* FOOTER */
+  footer { border-top: 1px solid var(--border); padding: 60px 80px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-name { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 20px; color: var(--muted); }
+  .footer-copy { font-size: 10px; letter-spacing: 0.2em; color: rgba(122,112,96,0.5); }
+
+  /* HERO ANIMATION */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { animation: fadeUp 0.8s cubic-bezier(0.4,0,0.2,1) both; }
+  .label { animation-delay: 0.1s; }
+  h1 { animation-delay: 0.2s; }
+  .hero-role { animation-delay: 0.3s; }
+  .hero-summary { animation-delay: 0.4s; }
+  .hero-contacts { animation-delay: 0.5s; }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { gap: 16px; }
+    .nav-links a { font-size: 9px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 120px 28px 80px; }
+    section { padding: 80px 28px; }
+    .skills-container, .projects-grid, .edu-grid, .connect-grid { grid-template-columns: 1fr; }
+    .lang-row { flex-direction: column; }
+    .exp-card { padding: 32px 24px; }
+    footer { padding: 40px 28px; flex-direction: column; gap: 12px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">S.S.</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#connect">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <p class="label">Portfolio · Sydney, NSW</p>
+    <h1>Suraj<br><em>Shrestha</em></h1>
+    <p class="hero-role">Bar Supervisor &nbsp;&middot;&nbsp; ICT Student</p>
+    <p class="hero-summary">
+      Dedicated professional with nearly 7 years of progressive hospitality experience across Sydney's premier venues. Concurrently pursuing a Bachelor of ICT — bridging people-centred leadership with technical problem-solving.
+    </p>
+    <div class="hero-contacts">
+      <div class="contact-item"><div class="contact-dot"></div><a href="tel:0433508020">0433 508 020</a></div>
+      <div class="contact-item"><div class="contact-dot"></div><a href="mailto:Shrsthasuraz96@gmail.com">Shrsthasuraz96@gmail.com</a></div>
+      <div class="contact-item"><div class="contact-dot"></div>Sydney, NSW, Australia</div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-ornament">SS</div>
+  </div>
+</div>
+
+<div class="full-border"></div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2>Experience</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="experience-grid">
+    <div class="exp-card">
+      <div class="exp-header">
+        <div>
+          <div class="exp-title">Bar Team Leader</div>
+          <div style="font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--muted);font-style:italic;margin-top:4px;">Senior Bartender</div>
+        </div>
+        <div class="exp-period">2023 – 2024</div>
+      </div>
+      <div class="exp-venue">The Charles Grand Brasserie &amp; Bar · Sydney</div>
+      <p class="exp-context">One of Sydney's premier fine dining venues, renowned for its Spanish, Italian and Australian-inspired cuisine, extensive cocktail menu and wine list curated by leading sommeliers.</p>
+      <ul class="exp-bullets">
+        <li>Delivered exceptional guest service, upholding the venue's fine dining reputation.</li>
+        <li>Crafted cocktails and managed guest requests efficiently during high-volume service.</li>
+        <li>Took charge of bar operations in the absence of the Bar Manager.</li>
+        <li>Maintained bar stock listings and provided superiors with timely reorder reports.</li>
+        <li>Prepared pre-batched cocktails and developed new cocktails as directed by management.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-title">Bar Supervisor</div>
+        <div class="exp-period">2022 – 2023</div>
+      </div>
+      <div class="exp-venue">Ruse Bar and Brasserie · Sydney</div>
+      <p class="exp-context">A family-owned hospitality group operating multiple Sydney venues including Harveys and The Factory, focused on quality wine and bar service with a high-profile clientele.</p>
+      <ul class="exp-bullets">
+        <li>Assisted Restaurant and Venue Managers with daily operational requirements.</li>
+        <li>Conducted weekly stock takes and reported data accurately to management.</li>
+        <li>Managed bar expenditure within 25% of weekly bar revenue through cost control.</li>
+        <li>Created seasonal cocktails targeting 75–80% gross profit margin.</li>
+        <li>Managed staff rosters, coordinated breaks and fostered a positive team environment.</li>
+        <li>Built supplier relationships and negotiated pricing to optimise cost efficiency.</li>
+        <li>Conducted end-of-day cash reconciliation.</li>
+      </ul>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-header">
+        <div class="exp-title">Senior Bartender</div>
+        <div class="exp-period">2021 – 2022</div>
+      </div>
+      <div class="exp-venue">Henry Deane Cocktail Lounge, Hotel Palisade · Sydney</div>
+      <p class="exp-context">A celebrated cocktail-focused bar showcasing Sydney Harbour Bridge views, known for innovative tapas and fresh craft cocktails.</p>
+      <ul class="exp-bullets">
+        <li>Oversaw bar operations in the absence of the Bar Manager.</li>
+        <li>Managed daily bar checks and assigned staff their daily duties.</li>
+        <li>Delivered induction programs to new staff members covering venue standards.</li>
+        <li>Promoted to Head Bartender in recognition of exceptional performance and leadership.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<div class="full-border"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2>Skills</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="skills-container">
+    <div class="skill-group">
+      <div class="skill-group-title">Technical</div>
+      <div class="skill-tags">
+        <span class="tag">JavaScript</span><span class="tag">MySQL</span><span class="tag">C++</span>
+        <span class="tag">Windows Server</span><span class="tag">Windows OS</span>
+        <span class="tag">Adobe Photoshop</span><span class="tag">DaVinci Resolve</span>
+        <span class="tag">Microsoft Office</span><span class="tag">DocuSign</span><span class="tag">Wix</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">POS Systems</div>
+      <div class="skill-tags">
+        <span class="tag">Tyro</span><span class="tag">Bepoz</span><span class="tag">Redcat</span>
+        <span class="tag">H&amp;L</span><span class="tag">Xero</span><span class="tag">Stripe</span><span class="tag">Lightspeed</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Leadership</div>
+      <div class="skill-tags">
+        <span class="tag">Team Management</span><span class="tag">Staff Rostering</span>
+        <span class="tag">Induction Programs</span><span class="tag">Operational Management</span>
+        <span class="tag">Stock Control</span><span class="tag">Cost Management</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">Soft Skills</div>
+      <div class="skill-tags">
+        <span class="tag">Client Relations</span><span class="tag">Communication</span>
+        <span class="tag">Problem Solving</span><span class="tag">Time Management</span>
+        <span class="tag">Attention to Detail</span><span class="tag">Supplier Negotiation</span>
+      </div>
+    </div>
+  </div>
+  <div class="lang-row">
+    <div class="lang-card"><div class="lang-name">English</div><div class="lang-level">Fluent</div></div>
+    <div class="lang-card"><div class="lang-name">Nepali</div><div class="lang-level">Native</div></div>
+    <div class="lang-card"><div class="lang-name">Hindi</div><div class="lang-level">Fluent</div></div>
+  </div>
+</section>
+
+<div class="full-border"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2>Projects</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card" data-num="01">
+      <div class="project-label">Academic · Group Project</div>
+      <div class="project-title">Parking Space Management Website</div>
+      <p class="project-desc">Collaborated on a group project to build a parking website enabling users to view available spaces and make reservations online. Contributed the graphical front-end view and implemented MySQL for database management and user authentication.</p>
+      <div class="project-tools">
+        <span class="tool-chip">JavaScript</span><span class="tool-chip">MySQL</span><span class="tool-chip">C++</span>
+      </div>
+    </div>
+    <div class="project-card" data-num="02">
+      <div class="project-label">Academic · Group Project</div>
+      <div class="project-title">IT Governance, Risk &amp; Compliance</div>
+      <p class="project-desc">Studied effective management of IT operations in an organisational context by applying established industry guidelines. Analysed real-world compliance scenarios and proposed governance improvements.</p>
+      <div class="project-tools">
+        <span class="tool-chip">COBIT 5</span><span class="tool-chip">NIST</span><span class="tool-chip">ITIL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="full-border"></div>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2>Education</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card">
+      <div class="edu-degree">Bachelor of Information &amp; Communications Technology</div>
+      <div class="edu-institution">Crown Institute of Higher Education · North Sydney</div>
+      <div class="edu-year">2023 – 2025</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Diploma / Advanced Diploma of IT</div>
+      <div class="edu-institution">CIBT · Sydney</div>
+      <div class="edu-year">2021 – 2022</div>
+    </div>
+  </div>
+</section>
+
+<div class="full-border"></div>
+
+<!-- CONNECT -->
+<section id="connect">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2>Connect</h2>
+    <div class="divider"></div>
+  </div>
+  <div class="connect-grid">
+
+    <a class="connect-card linkedin" href="https://www.linkedin.com/in/suraj-shrestha-b8934532b/" target="_blank" rel="noopener">
+      <div class="connect-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+      </div>
+      <div class="connect-platform">LinkedIn</div>
+      <div class="connect-title">Professional<br>Network</div>
+      <p class="connect-desc">View my full professional history, endorsements, and connect with me on LinkedIn.</p>
+      <div class="connect-arrow">View Profile</div>
+    </a>
+
+    <a class="connect-card github" href="https://github.com/" target="_blank" rel="noopener">
+      <div class="connect-icon">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+        </svg>
+      </div>
+      <div class="connect-platform">GitHub</div>
+      <div class="connect-title">Code &amp;<br>Projects</div>
+      <p class="connect-desc">Explore my repositories, academic projects, and code contributions on GitHub.</p>
+      <div class="connect-arrow">View GitHub</div>
+    </a>
+
+  </div>
+</section>
+
+<div class="full-border"></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-name">Suraj Shrestha</div>
+  <div class="footer-copy">References available on request &nbsp;·&nbsp; Sydney, NSW</div>
+</footer>
+
+</body>
+</html>
